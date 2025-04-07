@@ -13,12 +13,12 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +6 models.py
-badd +117 ~/Desktop/codes/webapps/drisac/config/settings.py
+badd +20 models.py
+badd +31 ~/Desktop/codes/webapps/drisac/config/settings.py
 badd +23 ~/Desktop/codes/webapps/drisac/config/urls.py
-badd +1 views.py
-badd +1 urls.py
-badd +1 serializers.py
+badd +251 views.py
+badd +13 urls.py
+badd +29 serializers.py
 argglobal
 %argdel
 edit ~/Desktop/codes/webapps/drisac/config/settings.py
@@ -46,13 +46,13 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 19 + 21) / 43)
+exe '1resize ' . ((&lines * 17 + 21) / 42)
 exe 'vert 1resize ' . ((&columns * 92 + 92) / 185)
-exe '2resize ' . ((&lines * 20 + 21) / 43)
+exe '2resize ' . ((&lines * 21 + 21) / 42)
 exe 'vert 2resize ' . ((&columns * 92 + 92) / 185)
-exe '3resize ' . ((&lines * 19 + 21) / 43)
+exe '3resize ' . ((&lines * 17 + 21) / 42)
 exe 'vert 3resize ' . ((&columns * 92 + 92) / 185)
-exe '4resize ' . ((&lines * 20 + 21) / 43)
+exe '4resize ' . ((&lines * 21 + 21) / 42)
 exe 'vert 4resize ' . ((&columns * 92 + 92) / 185)
 argglobal
 balt ~/Desktop/codes/webapps/drisac/config/urls.py
@@ -106,8 +106,8 @@ setlocal colorcolumn=
 setlocal comments=b:#,fb:-
 setlocal commentstring=#\ %s
 setlocal complete=.,w,b,u,t
-setlocal concealcursor=
-setlocal conceallevel=0
+setlocal concealcursor=nv
+setlocal conceallevel=2
 setlocal completefunc=
 setlocal nocopyindent
 setlocal nocursorbind
@@ -215,19 +215,19 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 116 - ((7 * winheight(0) + 9) / 19)
+let s:l = 31 - ((6 * winheight(0) + 8) / 17)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 116
-normal! 0
+keepjumps 31
+normal! 013|
 wincmd w
 argglobal
 if bufexists(fnamemodify("models.py", ":p")) | buffer models.py | else | edit models.py | endif
 if &buftype ==# 'terminal'
   silent file models.py
 endif
-balt ~/Desktop/codes/webapps/drisac/config/settings.py
+balt urls.py
 let s:cpo_save=&cpo
 set cpo&vim
 inoremap <buffer> <silent> <M-n> :call AutoPairsJump()a
@@ -278,8 +278,8 @@ setlocal colorcolumn=
 setlocal comments=b:#,fb:-
 setlocal commentstring=#\ %s
 setlocal complete=.,w,b,u,t
-setlocal concealcursor=
-setlocal conceallevel=0
+setlocal concealcursor=nv
+setlocal conceallevel=2
 setlocal completefunc=
 setlocal nocopyindent
 setlocal nocursorbind
@@ -387,19 +387,19 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 7 - ((6 * winheight(0) + 10) / 20)
+let s:l = 20 - ((19 * winheight(0) + 10) / 21)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 7
+keepjumps 20
 normal! 0
 wincmd w
 argglobal
-if bufexists(fnamemodify("urls.py", ":p")) | buffer urls.py | else | edit urls.py | endif
+if bufexists(fnamemodify("views.py", ":p")) | buffer views.py | else | edit views.py | endif
 if &buftype ==# 'terminal'
-  silent file urls.py
+  silent file views.py
 endif
-balt views.py
+balt urls.py
 let s:cpo_save=&cpo
 set cpo&vim
 inoremap <buffer> <silent> <M-n> :call AutoPairsJump()a
@@ -450,8 +450,8 @@ setlocal colorcolumn=
 setlocal comments=b:#,fb:-
 setlocal commentstring=#\ %s
 setlocal complete=.,w,b,u,t
-setlocal concealcursor=
-setlocal conceallevel=0
+setlocal concealcursor=nv
+setlocal conceallevel=2
 setlocal completefunc=
 setlocal nocopyindent
 setlocal nocursorbind
@@ -559,12 +559,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 9) / 19)
+let s:l = 251 - ((10 * winheight(0) + 8) / 17)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 251
+normal! 033|
 wincmd w
 argglobal
 if bufexists(fnamemodify("serializers.py", ":p")) | buffer serializers.py | else | edit serializers.py | endif
@@ -622,8 +622,8 @@ setlocal colorcolumn=
 setlocal comments=b:#,fb:-
 setlocal commentstring=#\ %s
 setlocal complete=.,w,b,u,t
-setlocal concealcursor=
-setlocal conceallevel=0
+setlocal concealcursor=nv
+setlocal conceallevel=2
 setlocal completefunc=
 setlocal nocopyindent
 setlocal nocursorbind
@@ -731,21 +731,20 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 10) / 20)
+let s:l = 109 - ((9 * winheight(0) + 10) / 21)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 109
+normal! 020|
 wincmd w
-2wincmd w
-exe '1resize ' . ((&lines * 19 + 21) / 43)
+exe '1resize ' . ((&lines * 17 + 21) / 42)
 exe 'vert 1resize ' . ((&columns * 92 + 92) / 185)
-exe '2resize ' . ((&lines * 20 + 21) / 43)
+exe '2resize ' . ((&lines * 21 + 21) / 42)
 exe 'vert 2resize ' . ((&columns * 92 + 92) / 185)
-exe '3resize ' . ((&lines * 19 + 21) / 43)
+exe '3resize ' . ((&lines * 17 + 21) / 42)
 exe 'vert 3resize ' . ((&columns * 92 + 92) / 185)
-exe '4resize ' . ((&lines * 20 + 21) / 43)
+exe '4resize ' . ((&lines * 21 + 21) / 42)
 exe 'vert 4resize ' . ((&columns * 92 + 92) / 185)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'

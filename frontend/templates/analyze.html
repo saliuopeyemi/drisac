@@ -1,0 +1,61 @@
+{% load static %}
+
+<div id="Notification" class="modal" style="display: block; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4);">
+        <div class="modal-content" style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 400px; border-radius: 5px;">
+            <span class="close" id="NotificationClose" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span> <!-- Close button -->
+           
+                <div>
+                    <h3 class="notification-text" style="padding: 15px 20px; background-color: #28a745; color: white; border-radius: 8px; font-size: 18px; font-weight: bold; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: 10px 0; max-width: 300px; margin-left: auto; margin-right: auto; animation: fadeIn 1s ease-out;">
+                        Revenue Analysis
+                    </h3>
+                    <h4 style="text-align: center; color:#062E05;">{{analysis.start}} to {{analysis.end}}</h4>
+                </div>
+
+            <div class="analysis-card total-expenditure" style="background-color: #f1f3f5; border-radius: 8px; margin: 10px 0; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+        <div class="icon" style="font-size: 40px; color: #007bff;">&#128176;</div>
+        <div>
+            <h3 style="font-size: 22px; color: #495057; margin: 0;">Total Expenditure</h3>
+            <p style="font-size: 18px; color: #007bff; margin: 0;">#{{ analysis.total_expense }}</p>
+        </div>
+    </div>
+    <div class="analysis-card total-revenue" style="background-color: #ffc107; border-radius: 8px; margin: 10px 0; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+        <div class="icon" style="font-size: 40px; color: #007bff;">&#128200;</div>
+        <div>
+            <h3 style="font-size: 22px; color: #495057; margin: 0;">Total Sales</h3>
+            <p style="font-size: 18px; color: #007bff; margin: 0;">#{{analysis.total_sale}}</p>
+        </div>
+    </div>
+
+    <div class="analysis-card" style="background-color: #f1f3f5; border-radius: 8px; margin: 10px 0; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+        <div class="icon" style="font-size: 40px; color: #007bff;">&#128178;</div>
+        <div>
+            <h3 style="font-size: 22px; color: #495057; margin: 0;">Total Revenue</h3>
+            <p style="font-size: 18px; color: #007bff; margin: 0;">#{{analysis.financial_status}}</p>
+        </div>
+    </div>
+    
+    {% if analysis.summary == "Profit"%}
+        <div class="analysis-card profit" style="background-color: #28a745; color: white; font-weight: bold; font-size: 18px; padding: 5px 10px; border-radius: 5px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+            <div class="icon" style="font-size: 40px; color: white;">&#128176;</div>
+            <div>
+                <h3 style="font-size: 22px; color: white; margin: 0;">Profit/Loss</h3>
+                <p style="font-size: 18px; color: white; margin: 0;">#{{analysis.financial_status}} {{analysis.summary}}</p>
+            </div>
+        </div>
+    {% else %}
+        
+        <div class="analysis-card profit" style="background-color: #CA161F; color: white; font-weight: bold; font-size: 18px; padding: 5px 10px; border-radius: 5px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+            <div class="icon" style="font-size: 40px; color: white;">&#128176;</div>
+            <div>
+                <h3 style="font-size: 22px; color: white; margin: 0;">Profit/Loss</h3>
+                <p style="font-size: 18px; color: white; margin: 0;">#{{analysis.financial_status}} {{analysis.summary}}</p>
+            </div>
+        </div>
+
+
+
+    {% endif %}
+
+        </div>
+    </div>
+

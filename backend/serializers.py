@@ -26,17 +26,17 @@ class CreateNewUserSerializer(serializers.Serializer):
         if validity == True:
             return value
         else:
-            raise serializers.ValidationError({"error":validity})
+            raise serializers.ValidationError(validity)
 
     def validate_email(self,value):
         if models.Users.objects.filter(email=value).exists():
-            raise serializers.ValidationError({"error":"Email exists"})
+            raise serializers.ValidationError("Email Exists.")
         else:
             return value
 
     def validate(self,data):
         if data["password"] != data["password2"]:
-            raise serializers.ValidationError({"error":"Password Mismatch"})
+            raise serializers.ValidationError("Password Mismatch")
         else:
             return data
 
@@ -49,6 +49,11 @@ class CreateNewUserSerializer(serializers.Serializer):
                     "user_type": user.user_type
                 }
         return output
+
+class UserRetrieveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Users
+        fields = ["id","email",'user_type','first_name','last_name']
 
 class DeleteUserSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
@@ -79,3 +84,92 @@ class LoginSerializer(serializers.Serializer):
                 raise serializers.ValidationError({"error":"Wrong Password"})
         else:
             raise serializers.ValidationError({"error":"Inexistent User"})
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Product
+        fields = ["id","title","description","unit_price"]
+
+        read_only_fields = ["id"]
+
+    def create(self,validated_data):
+        product = models.Product.objects.create(**validated_data)
+        output = {
+                    "title":product.title,
+                    "description":product.description,
+                    "unit_price":product.unit_price
+                }
+        return output
+
+class UpdateProductSerializer(serializers.Serializer):
+    #id = serializers.IntegerField()
+    title = serializers.CharField(max_length=300,required=False)
+    description = serializers.CharField(max_length=2500,required=False)
+    unit_price = serializers.IntegerField(required=False)
+
+    def update(self,instance,validated_data):
+        instance.title = validated_data.get("title",instance.title)
+        instance.description = validated_data.get("description",instance.description)
+        instance.unit_price = validated_data.get("unit_price",instance.unit_price)
+        instance.save()
+        output = {
+                    "id":instance.id,
+                    "title":instance.title,
+                    "description":instance.description,
+                    "unit_price":instance.unit_price
+                }
+        return output
+
+class ExpenditureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Expenditure
+        fields = ["id","title","description","amount","date"]
+
+        read_only_fields = ["id","date"]
+
+    def create(self,validated_data):
+        expenditure = models.Expenditure.objects.create(**validated_data)
+        output = {
+                    "title":expenditure.title,
+                    "description":expenditure.description,
+                    "amount":expenditure.amount,
+                    "date":expenditure.date
+                }
+        return output
+
+
+class SaleSerializer(serializers.ModelSerializer):
+    #product = ProductSerializer()
+    product = serializers.PrimaryKeyRelatedField(queryset=models.Product.objects.all())
+    class Meta:
+        model = models.Sales
+        fields = ["id","product","quantity","revenue","date"]
+
+        read_only_fields = ["id","revenue","date"]
+
+    def create(self,validated_data):
+        product = validated_data.get("product")
+        quantity = validated_data.get("quantity")
+        unit_price = models.Product.objects.get(id=product.id).unit_price
+        validated_data["revenue"] = quantity * unit_price
+        sale = models.Sales.objects.create(**validated_data)
+        output = {
+                    "product":product.title,
+                    "quantity":quantity,
+                    "revenue":sale.revenue,
+                    "date":sale.date
+                }
+        return output
+
+
+class SaleRetrieveSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+    class Meta:
+        model = models.Sales
+        fields = ["id","product","quantity","revenue","date"]
+
+
+class TotalRevenueSerializer(serializers.Serializer):
+    from_date = serializers.DateField()
+    to_date = serializers.DateField()

@@ -1,0 +1,27 @@
+<div id="DeleteExpenditureForm" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4);">
+        <div class="modal-content" style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 400px; border-radius: 5px;">
+            <span class="close" id="DeleteExpenditureClose" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span> <!-- Close button -->
+            <h3>Delete Expenditure</h3>
+            <form method=POST action="{% url 'remove-expense' %}">
+                {% csrf_token %}
+               
+        <div class="form-group" style="display: flex; flex-direction: column;">
+            <label for="product" style="font-size: 16px; color: #333; margin-bottom: 5px;">Product:</label>
+            <select class="form-control" id="expense" name="expense" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
+                <option value="">Select an Expense</option>
+                <!-- Loop through products passed from Django view -->
+                {% for expense in expenditures %}
+                <option value="{{ expense.id }}">{{ expense.title }} ({{ expense.description }})</option>
+                {% endfor %}
+            </select>
+            <p></p>
+        </div>
+
+
+                <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+
