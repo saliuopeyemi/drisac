@@ -10,6 +10,7 @@ notification = False
 notification_message = "Success"
 
 api_head = "http://127.0.0.1:8000/api"
+#api_head = 'http://192.168.28.134:8000/api'
 
 def construct_url(endpoint):
     url = f"{api_head}/{endpoint}/"
